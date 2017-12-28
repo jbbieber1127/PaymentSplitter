@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PaymentSplitterController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7ddd73" height="25.0" stroke="BLACK" strokeType="INSIDE" width="700.0" />
+      <Text layoutX="284.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Splitter">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Text>
+      <TabPane layoutY="25.0" prefHeight="475.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab onSelectionChanged="#tabPaneSelectionChanged" text="Save/Load">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="25.0" layoutY="25.0" prefHeight="400.0" prefWidth="312.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="312.0" />
+                              <HBox alignment="CENTER" prefHeight="30.0" prefWidth="312.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Load">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="loadPathField" layoutX="55.0" layoutY="59.0" prefHeight="25.0" prefWidth="190.0" />
+                              <Text layoutX="25.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" />
+                              <Button layoutX="250.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#loadButtonClicked" text="Load" />
+                              <Text fx:id="filePathErrorText" fill="#900000" layoutX="55.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid File Path">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="363.0" layoutY="25.0" prefHeight="400.0" prefWidth="312.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="312.0" />
+                              <HBox alignment="CENTER" prefHeight="30.0" prefWidth="312.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Save">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <Button layoutX="246.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#saveButtonClicked" text="Save" />
+                              <TextField fx:id="savePathField" layoutX="25.0" layoutY="59.0" prefHeight="25.0" prefWidth="217.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab onSelectionChanged="#tabPaneSelectionChanged" text="Accounts">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="accountsListView" editable="true" layoutX="25.0" layoutY="25.0" onKeyPressed="#accountsListViewActionPerformed" onKeyReleased="#accountsListViewActionPerformed" onKeyTyped="#accountsListViewActionPerformed" onMouseClicked="#accountsListViewActionPerformed" prefHeight="400.0" prefWidth="200.0" />
+                        <Button layoutX="235.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#newAccountButtonMouseClicked" prefWidth="100.0" text="New Account" />
+                        <AnchorPane layoutX="440.0" layoutY="25.0" prefHeight="400.0" prefWidth="235.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="235.0" />
+                              <TextField fx:id="selectedAccountNameField" layoutX="10.0" layoutY="40.0" onKeyTyped="#selectedAccountNameFieldKeyTyped" prefHeight="25.0" prefWidth="215.0" />
+                              <HBox alignment="TOP_CENTER" layoutY="10.0" prefHeight="30.0" prefWidth="235.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Account">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <Label fx:id="maxAccountNameErrorLabel" layoutX="11.0" layoutY="26.0" text="Label" textFill="#900000">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="deleteAccountButton" layoutX="235.0" layoutY="400.0" mnemonicParsing="false" onMouseClicked="#deleteAccountButtonMouseClicked" prefWidth="100.0" text="Delete Account" />
+                        <AnchorPane fx:id="errorPane" layoutX="235.0" layoutY="233.0" prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="involvedPaymentsList" editable="true" focusTraversable="false" layoutY="75.0" prefHeight="75.0" prefWidth="180.0" />
+                              <VBox alignment="BOTTOM_LEFT" prefHeight="75.0" prefWidth="180.0">
+                                 <children>
+                                    <Label fx:id="errorLabel" alignment="BOTTOM_LEFT" prefHeight="75.0" prefWidth="180.0" text="Label" textFill="#6f0000" wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <HBox alignment="CENTER" layoutX="25.0" layoutY="-2.0" prefHeight="20.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Accounts">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab onSelectionChanged="#tabPaneSelectionChanged" text="Payments">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="paymentsListView" layoutX="25.0" layoutY="25.0" onKeyPressed="#paymentListViewActionPerformed" onKeyReleased="#paymentListViewActionPerformed" onKeyTyped="#paymentListViewActionPerformed" onMouseClicked="#paymentListViewActionPerformed" prefHeight="400.0" prefWidth="200.0" />
+                        <AnchorPane layoutX="440.0" layoutY="25.0" prefHeight="400.0" prefWidth="235.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="235.0" />
+                              <TextField fx:id="selectedPaymentNameField" layoutX="10.0" layoutY="40.0" onKeyTyped="#selectedPaymentNameFieldKeyTyped" prefHeight="25.0" prefWidth="215.0" />
+                              <HBox alignment="TOP_CENTER" layoutY="10.0" prefHeight="30.0" prefWidth="235.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Payment">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <ListView fx:id="involvedAccountsListView" layoutX="10.0" layoutY="95.0" onKeyPressed="#involvedAccountsListViewActionPerformed" onKeyReleased="#involvedAccountsListViewActionPerformed" onKeyTyped="#involvedAccountsListViewActionPerformed" onMouseClicked="#involvedAccountsListViewActionPerformed" prefHeight="215.0" prefWidth="215.0" />
+                              <HBox alignment="TOP_CENTER" layoutY="75.0" prefHeight="30.0" prefWidth="235.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Involved Accounts - Amount Payed" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="318.0" prefHeight="38.0" prefWidth="156.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#uninvolveAccountButtonClicked" text="&lt;- Uninvolve" />
+                                 </children>
+                              </HBox>
+                              <Label fx:id="maxPaymentNameErrorLabel" layoutX="11.0" layoutY="26.0" text="Label" textFill="#900000">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Button layoutX="235.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#newPaymentButtonMouseClicked" prefWidth="100.0" text="New Payment" />
+                        <Button layoutX="235.0" layoutY="400.0" mnemonicParsing="false" onMouseClicked="#deletePaymentButtonMouseClicked" text="Delete Payment" />
+                        <AnchorPane layoutX="215.0" layoutY="75.0" prefHeight="300.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="300.0" layoutX="40.0" stroke="BLACK" strokeType="INSIDE" width="175.0" />
+                              <ListView fx:id="uninvolvedAccountsListView" layoutX="53.0" layoutY="30.0" onKeyPressed="#uninvolvedAccountsListViewActionPerformed" onKeyReleased="#uninvolvedAccountsListViewActionPerformed" onKeyTyped="#uninvolvedAccountsListViewActionPerformed" onMouseClicked="#uninvolvedAccountsListViewActionPerformed" prefHeight="230.0" prefWidth="150.0" />
+                              <HBox alignment="TOP_CENTER" layoutX="40.0" layoutY="10.0" prefHeight="20.0" prefWidth="175.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Uninvolved Accounts" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="TOP_RIGHT" layoutX="55.0" layoutY="268.0" prefHeight="38.0" prefWidth="148.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#involveAccountButtonClicked" text="Involve -&gt;" />
+                                 </children>
+                              </HBox>
+                              <Button layoutX="53.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#involveAllButtonClicked" text="Involve All" />
+                           </children>
+                        </AnchorPane>
+                        <HBox alignment="CENTER" layoutX="25.0" layoutY="-2.0" prefHeight="20.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payments">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab onSelectionChanged="#tabPaneSelectionChanged" text="Totals">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="accountTotalsTableView" layoutX="25.0" layoutY="25.0" onKeyPressed="#accountTotalsTableViewActionPerformed" onKeyReleased="#accountTotalsTableViewActionPerformed" onKeyTyped="#accountTotalsTableViewActionPerformed" onMouseClicked="#accountTotalsTableViewActionPerformed" prefHeight="400.0" prefWidth="327.0">
+                          <columns>
+                            <TableColumn fx:id="accountTableColumn" editable="false" prefWidth="175.0" resizable="false" sortable="false" text="Account" />
+                            <TableColumn fx:id="payedTableColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="Total Payed" />
+                              <TableColumn fx:id="owedTableColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="Owes" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
